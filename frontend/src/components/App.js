@@ -47,7 +47,7 @@ function App() {
         setCards(cards);
       })
       .catch((err) => console.log(err));
-  }, [])
+  }, [loggedIn]);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -195,11 +195,11 @@ function App() {
     if (!password || !email) {
       return;
     }
-    setEmail(email);
     auth.authorize(password, email)
       .then(
         (data) => {
           if (data.token) {
+            setEmail(email);
             handleLoggedIn();
             history.push('/');
           }
@@ -230,8 +230,13 @@ function App() {
   }, []);
 
   function onSignOut() {
-    localStorage.removeItem('jwt');
-    history.push('/sign-in');
+    auth.logOut()
+      .then(() => {
+        setLoggedIn(false);
+        localStorage.removeItem('jwt');
+        history.push('/sign-in');
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -255,54 +260,54 @@ function App() {
               onCardLike={handleCardLike}
               onCardDelete={handleConfirmation}
             />
-          <Route path="/sign-in">
-            <Login
-              onLogin={handleUserLogin}
-            />
-          </Route>
-          <Route path="/sign-up">
-            <Register
-              onRegister={handleUserRegister}
-            />
-          </Route>
-          <Route>
-            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
-          </Route>
-        </Switch>
+            <Route path="/sign-in">
+              <Login
+                onLogin={handleUserLogin}
+              />
+            </Route>
+            <Route path="/sign-up">
+              <Register
+                onRegister={handleUserRegister}
+              />
+            </Route>
+            <Route>
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+            </Route>
+          </Switch>
 
-        <Footer />
+          <Footer />
 
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-          isLoading={isLoading} />
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
-          isLoading={isLoading} />
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-          isLoading={isLoading} />
-        <ConfirmationPopup
-          card={deletedCard}
-          isOpen={isConfirmationPopupOpen}
-          onClose={closeAllPopups}
-          onSubmit={handleCardDelete}
-          isLoading={isLoading} />
-        <ImagePopup
-          card={selectedCard}
-          onClose={closeAllPopups} />
-        <InfoTooltip
-          isOpen={isInfoToolPopupOpen}
-          onClose={closeAllPopups}
-          message={infoTooltipMessage}
-          image={infoTooltipImage} />
+          <EditProfilePopup
+            isOpen={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+            onUpdateUser={handleUpdateUser}
+            isLoading={isLoading} />
+          <AddPlacePopup
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+            onAddPlace={handleAddPlaceSubmit}
+            isLoading={isLoading} />
+          <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
+            isLoading={isLoading} />
+          <ConfirmationPopup
+            card={deletedCard}
+            isOpen={isConfirmationPopupOpen}
+            onClose={closeAllPopups}
+            onSubmit={handleCardDelete}
+            isLoading={isLoading} />
+          <ImagePopup
+            card={selectedCard}
+            onClose={closeAllPopups} />
+          <InfoTooltip
+            isOpen={isInfoToolPopupOpen}
+            onClose={closeAllPopups}
+            message={infoTooltipMessage}
+            image={infoTooltipImage} />
+        </div>
       </div>
-    </div>
     </CurrentUserContext.Provider >
   );
 }

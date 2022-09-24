@@ -6,6 +6,7 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
+      credentials: 'include',
       headers: this._headers
     })
       .then(res => this._testResponse(res));
@@ -13,6 +14,7 @@ class Api {
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
+      credentials: 'include',
       headers: this._headers
     })
       .then(res => this._testResponse(res));
@@ -43,6 +45,7 @@ class Api {
 
   addCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
+      credentials: 'include',
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -55,6 +58,7 @@ class Api {
 
   addLike(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      credentials: 'include',
       method: 'PUT',
       headers: this._headers
     })
@@ -63,6 +67,7 @@ class Api {
 
   removeLike(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      credentials: 'include',
       method: 'DELETE',
       headers: this._headers
     })
@@ -71,8 +76,9 @@ class Api {
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      credentials: 'include',
       method: 'DELETE',
-      headers: this._headers
+      headers: this._headers,
     })
       .then(res => this._testResponse(res));
   }
@@ -86,14 +92,10 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-43',
+  baseUrl: 'api.yaana.nomoredomains.s.nomorepartiesxyz.ru',
   headers: {
-    authorization: '63424667-6e61-48dd-be49-243228bff784',
     'Content-Type': 'application/json'
   }
 });
 
 export default api;
-
-
-
