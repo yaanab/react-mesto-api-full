@@ -3,5 +3,5 @@
 
 Ссылка на репозиторий проекта https://github.com/yaanab/react-mesto-api-full<br />
 IP 84.252.139.250<br />
-Frontend yaana.nomoredomains.sbs<br />
-Backend api.yaana.nomoredomains.s.nomorepartiesxyz.ru<br />
+Frontend https://yaana.nomoredomains.sbs<br />
+Backend https://api.yaana.nomoredomains.s.nomorepartiesxyz.ru<br />
