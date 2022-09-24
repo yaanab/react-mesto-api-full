@@ -1,0 +1,5 @@
+.header__authorization {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 24px;
+}

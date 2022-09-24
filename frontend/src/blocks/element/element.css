@@ -1,0 +1,8 @@
+.element {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 282px 79px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}

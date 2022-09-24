@@ -1,0 +1,25 @@
+.popup__text {
+  width: 100%;
+  height: 36px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.popup__text:invalid:placeholder-shown {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.popup__text:focus {
+  border: 2px solid #A1BEF4;
+  border-radius: 3px;
+  outline: none;
+}
+
+.popup__text:invalid {
+  border-bottom: 1px solid #FF0000;
+}

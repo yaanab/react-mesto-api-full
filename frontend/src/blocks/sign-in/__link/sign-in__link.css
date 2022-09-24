@@ -1,0 +1,11 @@
+.sign-in__link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s;
+  color: #FFFFFF;
+}
+
+.sign-in__link:hover {
+  opacity: 0.6;
+}
+

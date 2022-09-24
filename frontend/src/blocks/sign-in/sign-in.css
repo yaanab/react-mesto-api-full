@@ -1,0 +1,11 @@
+.sign-in {
+  margin: 15px auto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
