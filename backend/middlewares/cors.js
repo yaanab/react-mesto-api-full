@@ -1,10 +1,11 @@
 const allowedCors = [
   'https://yaana.nomoredomains.sbs',
   'http://yaana.nomoredomains.sbs',
-  'localhost:3000',
+  'http://localhost:3000',
+  'http://localhost:3005',
 ];
 
-module.exports.cors = ((req, res, next) => {
+const cors = (req, res, next) => {
   const { origin } = req.headers;
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
@@ -19,4 +20,6 @@ module.exports.cors = ((req, res, next) => {
     return res.end();
   }
   return next();
-});
+};
+
+module.exports = cors;

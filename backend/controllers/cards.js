@@ -5,7 +5,7 @@ const BadRequestError = require('../errors/bad-request-error');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.send({ cards }))
+    .then((card) => res.send(card))
     .catch(next);
 };
 
@@ -54,7 +54,7 @@ module.exports.likeCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');
       }
-      return res.send({ card });
+      res.send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') {

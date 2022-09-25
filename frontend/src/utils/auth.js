@@ -1,4 +1,4 @@
-export const BASE_URL = 'api.yaana.nomoredomains.s.nomorepartiesxyz.ru';
+export const BASE_URL = 'http://localhost:3005';
 
 const testResponse = (res) => {
   if (res.ok) {
@@ -50,7 +50,7 @@ export const getContent = () => {
 }
 
 export const logOut = () => {
-  return fetch(`${BASE_URL}/logout`, {
+  return fetch(`${BASE_URL}/signout`, {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json'

@@ -92,7 +92,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'api.yaana.nomoredomains.s.nomorepartiesxyz.ru',
+  baseUrl: 'http://localhost:3005',
   headers: {
     'Content-Type': 'application/json'
   }

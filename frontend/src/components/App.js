@@ -41,13 +41,31 @@ function App() {
   const isOpen = isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || isConfirmationPopupOpen || selectedCard;
 
   useEffect(() => {
+    tokenCheck();
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([user, cards]) => {
         setCurrentUser(user);
         setCards(cards);
+        console.log(cards)
+        // console.log(user)
       })
       .catch((err) => console.log(err));
-  }, [loggedIn]);
+  }, []);
+
+  function tokenCheck() {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      auth.getContent()
+        .then(res => {
+          if (res) {
+            setLoggedIn(true);
+            setEmail(res.email);
+            history.push('/');
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -140,20 +158,22 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     if (isLiked) {
       api
         .removeLike(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+          setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
+          console.log(cards)
         })
         .catch((err) => console.log(err));
     } else {
       api
         .addLike(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+          setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
+          console.log(cards)
         })
         .catch((err) => console.log(err));
     }
@@ -187,10 +207,6 @@ function App() {
       });
   }
 
-  function handleLoggedIn() {
-    setLoggedIn(true);
-  }
-
   function handleUserLogin(password, email) {
     if (!password || !email) {
       return;
@@ -200,34 +216,12 @@ function App() {
         (data) => {
           if (data.token) {
             setEmail(email);
-            handleLoggedIn();
+            setLoggedIn(true);
             history.push('/');
           }
         })
       .catch((err) => console.log(err));
   }
-
-  function tokenCheck() {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      auth.getContent(token)
-        .then(res => {
-          if (res) {
-            handleLoggedIn();
-            setEmail(res.data.email);
-            history.push('/');
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-  }
-
-  useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      tokenCheck();
-    }
-  }, []);
 
   function onSignOut() {
     auth.logOut()
