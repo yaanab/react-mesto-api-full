@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3005';
+export const BASE_URL = 'api.yaana.nomoredomains.s.nomorepartiesxyz.ru';
 
 const testResponse = (res) => {
   if (res.ok) {
