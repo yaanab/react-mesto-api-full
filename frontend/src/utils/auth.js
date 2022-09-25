@@ -1,4 +1,4 @@
-export const BASE_URL = 'api.yaana.nomoredomains.s.nomorepartiesxyz.ru';
+export const BASE_URL = 'https://api.yaana.nomoredomains.s.nomorepartiesxyz.ru';
 
 const testResponse = (res) => {
   if (res.ok) {
