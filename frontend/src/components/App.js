@@ -48,7 +48,7 @@ function App() {
         setCards(cards);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [loggedIn]);
 
   function tokenCheck() {
     const token = localStorage.getItem('jwt');
@@ -120,8 +120,8 @@ function App() {
     setIsLoading(true);
     api
       .editProfile(name, description)
-      .then((data) => {
-        setCurrentUser(data);
+      .then((user) => {
+        setCurrentUser(user.data);
         closeAllPopups();
       })
       .catch((err) => console.log(err))
@@ -134,7 +134,7 @@ function App() {
     api
       .editAvatar(avatar)
       .then((data) => {
-        setCurrentUser(data);
+        setCurrentUser(data.user);
         closeAllPopups();
       })
       .catch((err) => console.log(err))
@@ -147,7 +147,7 @@ function App() {
     api
       .addCard(title, link)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards([newCard.card, ...cards]);
         closeAllPopups();
       })
       .catch((err) => console.log(err))
@@ -160,19 +160,15 @@ function App() {
     if (isLiked) {
       api
         .removeLike(card._id)
-        .then(card => console.log(card.card))
         .then((newCard) => {
-          setCards((cards) => cards.map((c) => c._id === card._id ? newCard.card : c));
-          console.log(cards)
+          setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
         })
         .catch((err) => console.log(err));
     } else {
       api
         .addLike(card._id)
-        .then(card => console.log(card))
         .then((newCard) => {
           setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
-          console.log(cards)
         })
         .catch((err) => console.log(err));
     }
