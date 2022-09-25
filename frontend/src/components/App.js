@@ -46,8 +46,6 @@ function App() {
       .then(([user, cards]) => {
         setCurrentUser(user);
         setCards(cards);
-        console.log(cards)
-        // console.log(user)
       })
       .catch((err) => console.log(err));
   }, []);
@@ -158,19 +156,20 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i === currentUser._id);
-
+    const isLiked = card.likes.some(id => id === currentUser._id);
     if (isLiked) {
       api
         .removeLike(card._id)
+        .then(card => console.log(card.card))
         .then((newCard) => {
-          setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
+          setCards((cards) => cards.map((c) => c._id === card._id ? newCard.card : c));
           console.log(cards)
         })
         .catch((err) => console.log(err));
     } else {
       api
         .addLike(card._id)
+        .then(card => console.log(card))
         .then((newCard) => {
           setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
           console.log(cards)
