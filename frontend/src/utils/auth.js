@@ -47,7 +47,6 @@ export const getContent = () => {
     }
   })
     .then(res => testResponse(res))
-    .then(data => data);
 }
 
 export const logOut = () => {

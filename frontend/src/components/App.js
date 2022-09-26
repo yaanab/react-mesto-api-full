@@ -42,7 +42,6 @@ function App() {
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
-    // console.log(jwt)
     if (jwt) {
       auth.getContent()
         .then((res) => {
@@ -60,7 +59,7 @@ function App() {
     if (loggedIn) {
       Promise.all([api.getUserInfo(), api.getInitialCards()])
         .then(([user, cards]) => {
-          setCurrentUser(user.data);
+          setCurrentUser(user);
           setCards(cards);
         })
         .catch((err) => console.log(err));
