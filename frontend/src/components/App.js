@@ -41,20 +41,11 @@ function App() {
   const isOpen = isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || isConfirmationPopupOpen || selectedCard;
 
   useEffect(() => {
-    tokenCheck();
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([user, cards]) => {
-        setCurrentUser(user);
-        setCards(cards);
-      })
-      .catch((err) => console.log(err));
-  }, [loggedIn]);
-
-  function tokenCheck() {
-    const token = localStorage.getItem('jwt');
-    if (token) {
+    const jwt = localStorage.getItem('jwt');
+    // console.log(jwt)
+    if (jwt) {
       auth.getContent()
-        .then(res => {
+        .then((res) => {
           if (res) {
             setLoggedIn(true);
             setEmail(res.email);
@@ -63,7 +54,19 @@ function App() {
         })
         .catch((err) => console.log(err));
     }
-  }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([user, cards]) => {
+          setCurrentUser(user.data);
+          setCards(cards);
+        })
+        .catch((err) => console.log(err));
+    }
+
+  }, [loggedIn]);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
