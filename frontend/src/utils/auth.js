@@ -1,5 +1,4 @@
 export const BASE_URL = 'https://api.yaana.nomoredomains.s.nomorepartiesxyz.ru';
-// const BASE_URL = 'http://localhost:3005';
 
 const testResponse = (res) => {
   if (res.ok) {
@@ -32,7 +31,7 @@ export const authorize = (password, email) => {
     .then(res => testResponse(res))
     .then((data) => {
       if (data.token) {
-        localStorage.setItem('jwt', data.token);
+        localStorage.setItem('jwt', data.token, );
         return data;
       }
     });
